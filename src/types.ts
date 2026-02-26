@@ -1,20 +1,9 @@
 export enum ClassType {
   NOVICE = "Novice",
   SWORDSMAN = "Swordsman",
-  BLADE_MASTER = "Blade Master",
-  SWORD_GOD = "Sword God",
   MAGE = "Mage",
-  ARCHMAGE = "Archmage",
-  REALITY_CASTER = "Reality Caster",
   ASSASSIN = "Assassin",
-  SHADOW_REAPER = "Shadow Reaper",
-  DEATH_GOD = "Death God",
   PALADIN = "Paladin",
-  HOLY_KNIGHT = "Holy Knight",
-  DIVINE_GUARDIAN = "Divine Guardian",
-  NECROMANCER = "Necromancer",
-  LICH_KING = "Lich King",
-  GOD_OF_DEATH = "God of Death",
 }
 
 export interface Stats {
@@ -26,6 +15,31 @@ export interface Stats {
   crit: number;
 }
 
+export interface Skill {
+  id: string;
+  name: string;
+  description: string;
+  damageMultiplier: number;
+  manaCost: number;
+  cooldown: number;
+  currentCooldown: number;
+}
+
+export interface Item {
+  id: string;
+  name: string;
+  description: string;
+  type: 'potion' | 'buff';
+  value: number;
+  count: number;
+}
+
+export interface CharacterAppearance {
+  hairColor: string;
+  skinColor: string;
+  weaponType: 'sword' | 'staff' | 'dagger' | 'shield';
+}
+
 export interface Player {
   name: string;
   level: number;
@@ -35,19 +49,25 @@ export interface Player {
   power: number;
   class: ClassType;
   stats: Stats;
+  mana: number;
+  maxMana: number;
   rebirths: number;
-  ascensions: number;
   currentWorld: number;
   unlockedWorlds: number[];
+  inventory: Item[];
+  skills: Skill[];
+  appearance: CharacterAppearance;
 }
 
-export interface Upgrade {
-  id: string;
+export interface Monster {
   name: string;
-  description: string;
-  baseCost: number;
-  costMultiplier: number;
-  level: number;
+  hp: number;
+  maxHp: number;
+  atk: number;
+  def: number;
+  expReward: number;
+  goldReward: number;
+  sprite: string;
 }
 
 export interface World {
@@ -55,17 +75,10 @@ export interface World {
   name: string;
   emoji: string;
   minLevel: number;
-  baseExp: number;
-  baseGold: number;
-  monsters: string[];
+  monsters: Monster[];
 }
 
 export interface GameState {
   player: Player;
-  upgrades: {
-    autoAttackSpeed: number;
-    autoExpGain: number;
-    autoGoldGain: number;
-  };
   lastUpdate: number;
 }
